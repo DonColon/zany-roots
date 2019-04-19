@@ -30,12 +30,12 @@ public final class Vector
 
 	public Vector add(final Vector other)
 	{
-		return new Vector(this.x + other.getX(), this.y + other.getY(), this.z + other.getZ());
+		return new Vector(this.x + other.x, this.y + other.y, this.z + other.z);
 	}
 
 	public Vector subtract(final Vector other)
 	{
-		return new Vector(this.x - other.getX(), this.y - other.getY(), this.z - other.getZ());
+		return new Vector(this.x - other.x, this.y - other.y, this.z - other.z);
 	}
 
 	public Vector multiply(final double scalar)
@@ -54,14 +54,14 @@ public final class Vector
 
 	public double dot(final Vector other)
 	{
-		return this.x * other.getX() + this.y * other.getY() + this.z * other.getZ();
+		return this.x * other.x + this.y * other.y + this.z * other.z;
 	}
 
 	public Vector cross(final Vector other)
 	{
-		return new Vector(this.y * other.getZ() - this.z * other.getY(),
-				   		  this.z * other.getX() - this.x * other.getZ(),
-				   		  this.x * other.getY() - this.y * other.getX());
+		return new Vector(this.y * other.z - this.z * other.y,
+				   		  this.z * other.x - this.x * other.z,
+				   		  this.x * other.y - this.y * other.x);
 	}
 
 	public double magnitude()
@@ -110,9 +110,9 @@ public final class Vector
 			return false;
 
 		final Vector other = (Vector) object;
-		return this.x == other.getX()
-			&& this.y == other.getY()
-			&& this.z == other.getZ();
+		return this.x == other.x
+			&& this.y == other.y
+			&& this.z == other.z;
 	}
 
 	@Override
