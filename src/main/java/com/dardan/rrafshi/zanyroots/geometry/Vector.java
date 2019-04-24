@@ -93,6 +93,26 @@ public final class Vector
 		return Math.toDegrees(Math.acos(numerator/denominator));
 	}
 
+	public boolean isCollinear(final Vector other)
+	{
+		final double checkX = this.x / other.x;
+		final double checkY = this.y / other.y;
+		final double checkZ = this.z / other.z;
+
+		if(checkX == checkY || checkY == checkZ || checkZ == checkX)
+			return true;
+		else
+			return false;
+	}
+
+	public boolean isVertical(final Vector other)
+	{
+		if(this.dot(other) == 0)
+			return true;
+		else
+			return false;
+	}
+
 
 	@Override
 	public String toString()
