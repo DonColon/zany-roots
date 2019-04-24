@@ -3,13 +3,22 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.dardan.rrafshi</groupId>
+	<groupId>com.dardan.rrafshi.zanyroots</groupId>
 	<artifactId>zany-roots</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
 
 	<name>zany-roots</name>
 	<description>A jump n' run game made with java</description>
 	<url>https://github.com/DonColon/zany-roots</url>
+
+	<modules>
+		<module>core</module>
+		<module>physics</module>
+		<module>graphics</module>
+		<module>audio</module>
+		<module>input</module>
+	</modules>
 
 	<developers>
 		<developer>
@@ -19,7 +28,7 @@
 				<role>developer</role>
 			</roles>
 		</developer>
-		
+
 		<developer>
 			<name>Hasan Kerem Karadeniz</name>
 			<email>hsnkrdnz57@gmail.com</email>
@@ -42,13 +51,15 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
 
-	<dependencies>
-		<dependency>
-			<groupId>com.dardan.rrafshi</groupId>
-			<artifactId>commons</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-	</dependencies>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.dardan.rrafshi</groupId>
+				<artifactId>commons</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<reporting>
 		<plugins>
