@@ -2,35 +2,34 @@ package com.dardan.rrafshi.zanyroots.geometry;
 
 import java.util.Objects;
 
+
 public final class Circle
 {
-	private final double x;
-	private final double y;
+	private final Vector location;
 	private final double radius;
 
 
+	public Circle(final Vector location, final double radius)
+	{
+		this.location = location;
+		this.radius = radius;
+	}
+
 	public Circle(final double x, final double y, final double radius)
 	{
-		this.x = x;
-		this.y = y;
-		this.radius = radius;
+		this(new Vector(x, y), radius);
 	}
 
 	public Circle(final double radius)
 	{
-		this(0, 0, radius);
+		this(new Vector(), radius);
 	}
 
-
-	public boolean intersect(final double x, final double y, final double radius)
-	{
-		return this.intersect(new Circle(x, y, radius));
-	}
 
 	public boolean intersect(final Circle other)
 	{
-		final Vector selfCenter = this.getCenter();
 		final Vector otherCenter = other.getCenter();
+		final Vector selfCenter = this.getCenter();
 
 		final double distance = selfCenter.distanceBetween(otherCenter);
 		final double collisionDistance = this.radius + other.radius;
@@ -41,52 +40,13 @@ public final class Circle
 			return false;
 	}
 
-	public boolean intersect(final double x, final double y, final double width, final double height)
-	{
-		return this.intersect(new Rectangle(x, y, width, height));
-	}
-
-	public boolean intersect(final Rectangle rectangle)
-	{
-		if(rectangle.contains(this.getCenter()))
-			return true;
-
-		final Vector[] corners = rectangle.getCorners();
-
-		for(final Vector corner : corners)
-			if(this.contains(corner))
-				return true;
-
-		if(this.getCenterX() > rectangle.getX() && this.getCenterX() < rectangle.getX() + rectangle.getWidth()) {
-			if(this.contains(this.getCenterX(), rectangle.getY()))
-				return true;
-
-			if(this.contains(this.getCenterX(), rectangle.getY() + rectangle.getHeight()))
-				return true;
-
-		} else if(this.getCenterY() > this.y && this.getCenterY() < rectangle.getY() + rectangle.getHeight()) {
-			if(this.contains(rectangle.getX(), this.getCenterY()))
-				return true;
-
-			if(this.contains(rectangle.getX() + rectangle.getWidth(), this.getCenterY()))
-				return true;
-		}
-
-		return false;
-	}
-
-	public boolean contains(final double x, final double y)
-	{
-		return this.contains(new Vector(x, y));
-	}
-
 	public boolean contains(final Vector other)
 	{
-		final Vector self = this.getCenter();
+		final Vector center = this.getCenter();
 
-		final double distance = self.distanceBetween(other);
+		final double distance = center.distanceBetween(other);
 
-		if(distance < this.radius)
+		if(distance <= this.radius)
 			return true;
 		else
 			return false;
@@ -96,7 +56,7 @@ public final class Circle
 	@Override
 	public String toString()
 	{
-		return "(x=" + this.x + ", y=" + this.y + ", radius=" + this.radius + ")";
+		return "(location=" + this.location + ", radius=" + this.radius + ")";
 	}
 
 	@Override
@@ -109,50 +69,55 @@ public final class Circle
 			return false;
 
 		final Circle other = (Circle) object;
-		return this.x == other.x
-			&& this.y == other.y
-			&& this.radius == other.radius;
+		return Objects.equals(this.location, other.location)
+			&& Objects.equals(this.radius, other.radius);
 	}
 
 	@Override
 	public int hashCode()
 	{
-		return Objects.hash(this.x, this.y, this.radius);
+		return Objects.hash(this.location, this.radius);
 	}
 
 
 	public Vector getLocation()
 	{
-		return new Vector(this.x, this.y);
+		return this.location;
 	}
 
-	public double getX()
+	public double getLocationX()
 	{
-		return this.x;
+		return this.location.getX();
 	}
 
-	public double getY()
+	public double getLocationY()
 	{
-		return this.y;
+		return this.location.getY();
 	}
 
 	public Vector getCenter()
 	{
-		return new Vector(this.getCenterX(), this.getCenterY());
+		final Vector center = new Vector(this.radius, this.radius);
+		return this.location.add(center);
 	}
 
 	public double getCenterX()
 	{
-		return this.x + this.radius;
+		return this.getCenter().getX();
 	}
 
 	public double getCenterY()
 	{
-		return this.y + this.radius;
+		return this.getCenter().getY();
 	}
 
 	public double getRadius()
 	{
 		return this.radius;
+	}
+
+	public double getDiameter()
+	{
+		return 2 * this.radius;
 	}
 }
